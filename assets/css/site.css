@@ -1101,48 +1101,6 @@ a.fact:hover { border-color: var(--energie); }
 .kawa__gallery div { aspect-ratio: 1 / 1; border-radius: 16px; overflow: hidden; }
 .kawa__gallery img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.kawa-news {
-  background: var(--kawa-deep);
-  border-radius: 22px;
-  padding: clamp(32px, 4vw, 52px);
-  color: #f3f4ec;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 32px;
-  align-items: center;
-}
-.kawa-news__kicker {
-  font-family: var(--sans);
-  font-size: 12px; font-weight: 700;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: var(--kawa-label);
-  margin-bottom: 12px;
-}
-.kawa-news h2 {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-size: clamp(26px, 3vw, 36px);
-  margin: 0 0 14px;
-}
-.kawa-news p {
-  font-family: var(--sans);
-  font-size: 15.5px; line-height: 1.7;
-  color: var(--kawa-para);
-  margin: 0;
-  max-width: 44ch;
-}
-.btn-kawa-invert {
-  flex: none;
-  font-family: var(--display);
-  font-size: 15px; font-weight: 600;
-  color: var(--kawa-deep);
-  background: #f3f4ec;
-  border-radius: 10px;
-  padding: 14px 26px;
-  white-space: nowrap;
-}
-.btn-kawa-invert:hover { background: var(--white); color: var(--kawa-deep); }
-
 .kawa .fact { border-color: rgba(59, 64, 40, .12); }
 .kawa a.fact:hover { border-color: var(--kawa); }
 .kawa .fact__label { color: var(--kawa-faint); }
@@ -1192,7 +1150,6 @@ a.fact:hover { border-color: var(--energie); }
 .pad-sweet-order { padding: 44px var(--gutter) 96px; }
 .pad-kawa-panels { padding: 52px var(--gutter) 20px; }
 .pad-kawa-gallery { padding: 24px var(--gutter); }
-.pad-kawa-news   { padding: 40px var(--gutter); }
 .pad-kawa-facts  { padding: 8px var(--gutter) 96px; }
 
 /* --------------------------------------------------------------------------
@@ -1218,8 +1175,6 @@ a.fact:hover { border-color: var(--energie); }
   }
   .sweet-order { grid-template-columns: 1fr; }
   .sweet-order__media { min-height: 280px; }
-  .kawa-news { grid-template-columns: 1fr; gap: 24px; }
-  .btn-kawa-invert { justify-self: start; display: inline-block; }
   .h-display, .kawa h1, .sweet h1, .philo-hero h1 { max-width: none; }
 }
 
