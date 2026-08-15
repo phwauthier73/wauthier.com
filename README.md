@@ -50,17 +50,30 @@ inconnue retombe sur l'accueil.
 Cinq formulaires (IA & RH, Énergie, Architecture, Philo, SweetLo). Chacun porte
 la couleur d'accent de son activité et nomme l'activité dans sa confirmation.
 
-**Aucun envoi réel n'est configuré pour l'instant.** Comme dans le prototype,
-le formulaire affiche seulement son écran de confirmation — le message n'arrive
-nulle part.
+Chaque formulaire envoie vers l'URL de son propre attribut `data-endpoint`,
+dans `index.html`, à côté du point de montage. À défaut il retombe sur
+`CONTACT_ENDPOINT`, en haut de `assets/js/site.js`, commun à tous les
+formulaires. Quand aucun des deux n'est renseigné, le formulaire affiche
+seulement son écran de confirmation et le message n'arrive nulle part, comme
+dans le prototype.
 
-Pour activer l'envoi, renseigner `CONTACT_ENDPOINT` en haut de
-`assets/js/site.js` avec une URL acceptant un POST (Formspree, Netlify Forms,
-webhook n8n…) :
+```html
+<div class="contact-form-mount" data-activity="…" data-endpoint="https://…"></div>
+```
 
 ```js
-var CONTACT_ENDPOINT = 'https://…';
+var CONTACT_ENDPOINT = 'https://…';   // destination par défaut
 ```
+
+**État actuel.** Les cinq formulaires envoient vers le même workflow n8n
+« Formulaire contact wauthier.com », via `CONTACT_ENDPOINT`. Aucun n'a de
+`data-endpoint` : l'attribut ne sert que si une activité doit un jour partir
+ailleurs.
+
+Attention en cas de retour en arrière : un formulaire sans destination affiche
+quand même son écran « Message envoyé ». Le visiteur croit son message parti,
+alors qu'il n'existe nulle part. Ne laisser un formulaire non branché que si
+c'est vraiment l'intention.
 
 Le corps envoyé est du JSON :
 
@@ -69,6 +82,40 @@ Le corps envoyé est du JSON :
 ```
 
 Toute réponse hors 2xx affiche un message d'erreur sous le formulaire.
+
+### Côté n8n
+
+L'appel part du navigateur du visiteur, donc le nœud **Webhook** doit :
+
+- écouter en `POST` ;
+- autoriser l'origine du site dans son option **Allowed Origins (CORS)** —
+  sans quoi le navigateur bloque la requête avant même qu'elle parte, et le
+  visiteur voit le message d'erreur ;
+- répondre en 2xx (« Respond: Immediately » suffit).
+
+L'URL à coller est celle de **production** (`/webhook/…`), le workflow étant
+actif. L'URL de test (`/webhook-test/…`) ne répond que pendant une écoute
+manuelle dans l'éditeur, et un workflow désactivé répond 404 sur l'URL de
+production — le visiteur voit alors le message d'erreur.
+
+Le champ `activity` du payload nomme l'activité d'origine (« Atelier Déclic
+IA & RH », « Certificat PEB (résidentiel)», « SweetLo pâtisseries »…) : de quoi
+router les messages sans multiplier les webhooks.
+
+Le workflow en place fait trois choses : il normalise les six champs, envoie le
+message par mail avec le visiteur en Reply-To, et archive la soumission dans le
+classeur Google Sheets `Archive_forms_wauthier_com`. Mail et archivage sont deux
+branches parallèles, l'archivage en « continue on error » : si Google Sheets est
+indisponible, le mail part quand même.
+
+Le destinataire dépend de l'activité : `Certificat PEB (résidentiel)` part vers
+`peb@wauthier.com`, tout le reste vers `philippe@wauthier.com`. Le libellé est
+comparé tel quel — modifier un `data-activity` dans `index.html` sans ajuster le
+workflow renverrait les demandes PEB chez Philippe.
+
+L'écriture dans Sheets est en `RAW` et doit le rester : en `USER_ENTERED`, un
+numéro de téléphone au format international est interprété comme une formule et
+la cellule affiche `#ERROR!`.
 
 ## Points à connaître
 
