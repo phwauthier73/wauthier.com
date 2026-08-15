@@ -362,14 +362,33 @@ main { flex: 1; }
   background: linear-gradient(180deg, rgba(90, 54, 38, 0) 35%, rgba(90, 54, 38, .72) 100%);
 }
 
-.tile--kawa { grid-column: span 3; grid-row: span 1; }
+/* Logo tile: the Kawa mark ships as an opaque rectangle with its own green
+   gradient baked in, so it is cropped to a circle — showing only the white
+   disc — over a tile background sampled from that same gradient. */
+.tile--kawa {
+  grid-column: span 3; grid-row: span 1;
+  background: linear-gradient(150deg, #98a67c 0%, #bccba1 100%);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+  padding: 22px 22px 22px 24px;
+}
 .tile--kawa h3 {
   font-family: var(--serif);
   font-size: 24px; font-weight: 400; line-height: 1.05;
+  color: #2b3320;
 }
-.tile--kawa .tile__cue { font-weight: 600; }
-.tile--kawa .tile__scrim {
-  background: linear-gradient(180deg, rgba(40, 44, 28, 0) 35%, rgba(40, 44, 28, .74) 100%);
+.tile--kawa .tile__cue { font-weight: 600; color: #46522f; }
+.tile--kawa .tile__mark {
+  flex: none;
+  width: 96px; height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.tile--kawa .tile__mark img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.06);
 }
 
 .tile--energie {
@@ -1199,9 +1218,10 @@ a.fact:hover { border-color: var(--energie); }
     gap: 12px;
   }
   .bento__grid .tile { grid-column: 1 / -1 !important; grid-row: auto !important; }
-  .tile--archi, .tile--sweet, .tile--kawa { min-height: 230px; }
+  .tile--archi, .tile--sweet { min-height: 230px; }
   .tile--ia { min-height: 280px; }
-  .tile--energie, .tile--philo { min-height: 150px; }
+  /* Kawa is now a logo tile, not a photo tile — it sizes like the other two. */
+  .tile--energie, .tile--philo, .tile--kawa { min-height: 150px; }
 
   .cform__row { grid-template-columns: 1fr; }
 
