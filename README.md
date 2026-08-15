@@ -65,9 +65,10 @@ dans le prototype.
 var CONTACT_ENDPOINT = 'https://…';   // destination par défaut
 ```
 
-**État actuel : aucun envoi réel.** `CONTACT_ENDPOINT` vaut `null` et le seul
-`data-endpoint` posé, celui d'IA & RH, est vide — en attente de l'URL du
-webhook n8n.
+**État actuel.** Seul le formulaire IA & RH envoie réellement : il pointe vers
+le workflow n8n « Formulaire contact wauthier.com ». Les quatre autres n'ont
+pas de `data-endpoint` et `CONTACT_ENDPOINT` vaut `null`, donc ils affichent
+leur confirmation sans que le message parte nulle part.
 
 Le corps envoyé est du JSON :
 
@@ -89,11 +90,22 @@ L'appel part du navigateur du visiteur, donc le nœud **Webhook** doit :
 
 L'URL à coller est celle de **production** (`/webhook/…`), le workflow étant
 actif. L'URL de test (`/webhook-test/…`) ne répond que pendant une écoute
-manuelle dans l'éditeur.
+manuelle dans l'éditeur, et un workflow désactivé répond 404 sur l'URL de
+production — le visiteur voit alors le message d'erreur.
 
 Le champ `activity` du payload nomme l'activité d'origine (« Atelier Déclic
 IA & RH », « Certificat PEB (résidentiel)», « SweetLo pâtisseries »…) : de quoi
 router les messages sans multiplier les webhooks.
+
+Le workflow en place fait trois choses : il normalise les six champs, envoie le
+message par mail avec le visiteur en Reply-To, et archive la soumission dans le
+classeur Google Sheets `Archive_forms_wauthier_com`. Mail et archivage sont deux
+branches parallèles, l'archivage en « continue on error » : si Google Sheets est
+indisponible, le mail part quand même.
+
+L'écriture dans Sheets est en `RAW` et doit le rester : en `USER_ENTERED`, un
+numéro de téléphone au format international est interprété comme une formule et
+la cellule affiche `#ERROR!`.
 
 ## Points à connaître
 
