@@ -245,7 +245,11 @@
           </a>
         </div>
         <div class="cta-dark__form-shell">
-          <div class="contact-form-mount" data-activity="Atelier Déclic IA &amp; RH" data-accent="#1f5f9e"></div>
+          <!-- Delivery: paste the n8n production webhook URL into data-endpoint
+               (https://…/webhook/…, not /webhook-test/, and the workflow must be
+               active). While it is empty the form only confirms, sending nothing.
+               The n8n Webhook node must allow this site's origin under CORS. -->
+          <div class="contact-form-mount" data-activity="Atelier Déclic IA &amp; RH" data-accent="#1f5f9e" data-endpoint=""></div>
         </div>
       </div>
     </section>

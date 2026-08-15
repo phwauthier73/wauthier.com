@@ -50,17 +50,24 @@ inconnue retombe sur l'accueil.
 Cinq formulaires (IA & RH, Énergie, Architecture, Philo, SweetLo). Chacun porte
 la couleur d'accent de son activité et nomme l'activité dans sa confirmation.
 
-**Aucun envoi réel n'est configuré pour l'instant.** Comme dans le prototype,
-le formulaire affiche seulement son écran de confirmation — le message n'arrive
-nulle part.
+Chaque formulaire envoie vers l'URL de son propre attribut `data-endpoint`,
+dans `index.html`, à côté du point de montage. À défaut il retombe sur
+`CONTACT_ENDPOINT`, en haut de `assets/js/site.js`, commun à tous les
+formulaires. Quand aucun des deux n'est renseigné, le formulaire affiche
+seulement son écran de confirmation et le message n'arrive nulle part, comme
+dans le prototype.
 
-Pour activer l'envoi, renseigner `CONTACT_ENDPOINT` en haut de
-`assets/js/site.js` avec une URL acceptant un POST (Formspree, Netlify Forms,
-webhook n8n…) :
+```html
+<div class="contact-form-mount" data-activity="…" data-endpoint="https://…"></div>
+```
 
 ```js
-var CONTACT_ENDPOINT = 'https://…';
+var CONTACT_ENDPOINT = 'https://…';   // destination par défaut
 ```
+
+**État actuel : aucun envoi réel.** `CONTACT_ENDPOINT` vaut `null` et le seul
+`data-endpoint` posé, celui d'IA & RH, est vide — en attente de l'URL du
+webhook n8n.
 
 Le corps envoyé est du JSON :
 
@@ -69,6 +76,24 @@ Le corps envoyé est du JSON :
 ```
 
 Toute réponse hors 2xx affiche un message d'erreur sous le formulaire.
+
+### Côté n8n
+
+L'appel part du navigateur du visiteur, donc le nœud **Webhook** doit :
+
+- écouter en `POST` ;
+- autoriser l'origine du site dans son option **Allowed Origins (CORS)** —
+  sans quoi le navigateur bloque la requête avant même qu'elle parte, et le
+  visiteur voit le message d'erreur ;
+- répondre en 2xx (« Respond: Immediately » suffit).
+
+L'URL à coller est celle de **production** (`/webhook/…`), le workflow étant
+actif. L'URL de test (`/webhook-test/…`) ne répond que pendant une écoute
+manuelle dans l'éditeur.
+
+Le champ `activity` du payload nomme l'activité d'origine (« Atelier Déclic
+IA & RH », « Certificat PEB (résidentiel)», « SweetLo pâtisseries »…) : de quoi
+router les messages sans multiplier les webhooks.
 
 ## Points à connaître
 

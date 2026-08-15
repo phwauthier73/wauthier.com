@@ -7,11 +7,18 @@
   /* ------------------------------------------------------------------------
      Contact form delivery
      ------------------------------------------------------------------------
-     No endpoint is configured yet, so submissions are NOT delivered anywhere —
-     the form only shows its confirmation state, exactly like the prototype.
+     A form delivers to the URL in its own `data-endpoint` attribute, in
+     index.html, next to the mount point. Forms without one fall back to
+     CONTACT_ENDPOINT below; where neither is set, the form only shows its
+     confirmation state and the message goes nowhere, as in the prototype.
 
-     To make it deliver for real, set CONTACT_ENDPOINT to a URL that accepts a
-     POST (Formspree, Netlify Forms, an n8n webhook, …). The payload is JSON:
+     Set CONTACT_ENDPOINT to deliver every form to the same place; use
+     `data-endpoint` to give one activity its own destination (a dedicated n8n
+     workflow, say) or to switch the forms on one at a time.
+
+     Either way the URL must accept a POST and allow cross-origin requests from
+     the site's own domain — the call is made from the visitor's browser. The
+     payload is JSON:
 
          { name, phone, email, message, activity, page }
 
@@ -105,6 +112,7 @@
   function mountForm(mount) {
     var activity = mount.getAttribute('data-activity') || 'Contact';
     var accent   = mount.getAttribute('data-accent')   || '#16150f';
+    var endpoint = mount.getAttribute('data-endpoint') || CONTACT_ENDPOINT;
     mount.style.setProperty('--accent', accent);
 
     mount.textContent = '';
@@ -137,7 +145,7 @@
         page:     window.location.href
       };
 
-      if (!CONTACT_ENDPOINT) {
+      if (!endpoint) {
         // No backend wired up yet — mirror the prototype's confirmation state.
         showSent(mount, activity, accent);
         return;
@@ -147,7 +155,7 @@
       var original = submit.firstChild.nodeValue;
       submit.firstChild.nodeValue = 'Envoi… ';
 
-      fetch(CONTACT_ENDPOINT, {
+      fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(data)
