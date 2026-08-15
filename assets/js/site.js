@@ -23,8 +23,13 @@
          { name, phone, email, message, activity, page }
 
      Anything other than a 2xx response surfaces the inline error message.
+
+     All five forms currently share one destination: the n8n workflow
+     « Formulaire contact wauthier.com », which routes on `activity`. Leave
+     CONTACT_ENDPOINT empty only if the intent is for a form to confirm without
+     delivering — the visitor cannot tell the difference.
      ---------------------------------------------------------------------- */
-  var CONTACT_ENDPOINT = null;
+  var CONTACT_ENDPOINT = 'https://wauthiep.app.n8n.cloud/webhook/wauthier-contact';
 
   /* ------------------------------------------------------------------------
      Routes

@@ -65,10 +65,15 @@ dans le prototype.
 var CONTACT_ENDPOINT = 'https://…';   // destination par défaut
 ```
 
-**État actuel.** Seul le formulaire IA & RH envoie réellement : il pointe vers
-le workflow n8n « Formulaire contact wauthier.com ». Les quatre autres n'ont
-pas de `data-endpoint` et `CONTACT_ENDPOINT` vaut `null`, donc ils affichent
-leur confirmation sans que le message parte nulle part.
+**État actuel.** Les cinq formulaires envoient vers le même workflow n8n
+« Formulaire contact wauthier.com », via `CONTACT_ENDPOINT`. Aucun n'a de
+`data-endpoint` : l'attribut ne sert que si une activité doit un jour partir
+ailleurs.
+
+Attention en cas de retour en arrière : un formulaire sans destination affiche
+quand même son écran « Message envoyé ». Le visiteur croit son message parti,
+alors qu'il n'existe nulle part. Ne laisser un formulaire non branché que si
+c'est vraiment l'intention.
 
 Le corps envoyé est du JSON :
 
@@ -102,6 +107,11 @@ message par mail avec le visiteur en Reply-To, et archive la soumission dans le
 classeur Google Sheets `Archive_forms_wauthier_com`. Mail et archivage sont deux
 branches parallèles, l'archivage en « continue on error » : si Google Sheets est
 indisponible, le mail part quand même.
+
+Le destinataire dépend de l'activité : `Certificat PEB (résidentiel)` part vers
+`peb@wauthier.com`, tout le reste vers `philippe@wauthier.com`. Le libellé est
+comparé tel quel — modifier un `data-activity` dans `index.html` sans ajuster le
+workflow renverrait les demandes PEB chez Philippe.
 
 L'écriture dans Sheets est en `RAW` et doit le rester : en `USER_ENTERED`, un
 numéro de téléphone au format international est interprété comme une formule et
