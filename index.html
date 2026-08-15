@@ -245,11 +245,11 @@
           </a>
         </div>
         <div class="cta-dark__form-shell">
-          <!-- Delivery: paste the n8n production webhook URL into data-endpoint
-               (https://…/webhook/…, not /webhook-test/, and the workflow must be
-               active). While it is empty the form only confirms, sending nothing.
-               The n8n Webhook node must allow this site's origin under CORS. -->
-          <div class="contact-form-mount" data-activity="Atelier Déclic IA &amp; RH" data-accent="#1f5f9e" data-endpoint=""></div>
+          <!-- Delivery: n8n workflow « Formulaire contact wauthier.com ». Its
+               Webhook node must keep allowing this site's origin under CORS, and
+               the workflow must stay active — an inactive workflow answers 404
+               on the production URL and the visitor sees the error message. -->
+          <div class="contact-form-mount" data-activity="Atelier Déclic IA &amp; RH" data-accent="#1f5f9e" data-endpoint="https://wauthiep.app.n8n.cloud/webhook/wauthier-contact"></div>
         </div>
       </div>
     </section>
