@@ -630,6 +630,23 @@ a.fact:hover { color: inherit; }
 .cform__submit:hover { opacity: .88; }
 .cform__submit[disabled] { opacity: .6; cursor: default; }
 
+/* Marque un champ non obligatoire, sans rompre le libellé en capitales. */
+.cform__optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted-2);
+  opacity: .75;
+}
+
+.cform__note {
+  font-family: var(--sans);
+  font-size: 13px; line-height: 1.55;
+  color: var(--muted-2);
+  max-width: 52ch;
+  margin: -4px 0 0;
+}
+
 .cform__error {
   font-family: var(--sans);
   font-size: 14px; line-height: 1.5;

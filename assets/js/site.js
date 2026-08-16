@@ -52,6 +52,27 @@
   var PHILO_QUOTE_ENDPOINT = 'https://wauthiep.app.n8n.cloud/webhook/philo-citation-du-jour';
 
   /* ------------------------------------------------------------------------
+     Daily quote subscription
+     ------------------------------------------------------------------------
+     The philo screen's sign-up form delivers to the n8n workflow
+     « Inscription citation du jour wauthier.com », which writes the subscriber
+     to the Google Sheets workbook « mailing_list_philo ». The payload is JSON:
+
+         { firstname, lastname, email, comment, page }
+
+     First name, last name and email are required; `comment` is free text and
+     often empty. The workflow writes one row per address — a second sign-up
+     with the same email updates that row rather than adding a second one, so
+     the last submission wins on every column.
+
+     Like the contact forms, the URL must accept a POST and allow cross-origin
+     requests from the site's own domain; anything other than a 2xx response
+     surfaces the inline error message. Leaving this empty makes the form
+     confirm without subscribing anyone — the visitor cannot tell.
+     ---------------------------------------------------------------------- */
+  var PHILO_SUBSCRIBE_ENDPOINT = 'https://wauthiep.app.n8n.cloud/webhook/philo-inscription';
+
+  /* ------------------------------------------------------------------------
      Routes
      ---------------------------------------------------------------------- */
   var ROUTES = {
@@ -331,12 +352,107 @@
     panel.focus();
   }
 
+  /* ------------------------------------------------------------------------
+     Daily quote sign-up on the philo screen
+     ------------------------------------------------------------------------
+     Same shape as the contact forms — a template cloned into its mount, an
+     inline error, a confirmation panel — but it subscribes rather than sends a
+     message, so it has its own endpoint and its own two templates. Only the
+     comment is optional; the browser enforces the other three via `required`.
+     ---------------------------------------------------------------------- */
+  var subscribeTpl = document.getElementById('subscribe-form-tpl');
+  var subscribedTpl = document.getElementById('subscribe-done-tpl');
+
+  function mountSubscribeForm(mount) {
+    var accent   = mount.getAttribute('data-accent')   || '#16150f';
+    var endpoint = mount.getAttribute('data-endpoint') || PHILO_SUBSCRIBE_ENDPOINT;
+    mount.style.setProperty('--accent', accent);
+
+    mount.textContent = '';
+    var form = subscribeTpl.content.cloneNode(true).querySelector('form');
+    var errorBox = form.querySelector('.cform__error');
+    var submit   = form.querySelector('.cform__submit');
+
+    function fail(message) {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      if (!form.checkValidity()) {
+        var firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
+        fail("Merci d'indiquer votre prénom, votre nom et une adresse e-mail valide.");
+        return;
+      }
+
+      var data = {
+        firstname: form.elements.firstname.value.trim(),
+        lastname:  form.elements.lastname.value.trim(),
+        email:     form.elements.email.value.trim(),
+        comment:   form.elements.comment.value.trim(),
+        page:      window.location.href
+      };
+
+      if (!endpoint) {
+        // No backend wired up yet — confirm without subscribing anyone.
+        showSubscribed(mount, data.email);
+        return;
+      }
+
+      submit.disabled = true;
+      var original = submit.firstChild.nodeValue;
+      submit.firstChild.nodeValue = 'Inscription… ';
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          showSubscribed(mount, data.email);
+        })
+        .catch(function () {
+          submit.disabled = false;
+          submit.firstChild.nodeValue = original;
+          fail("L'inscription a échoué. Réessayez, ou écrivez directement à philippe@wauthier.com.");
+        });
+    });
+
+    mount.appendChild(form);
+  }
+
+  function showSubscribed(mount, email) {
+    mount.textContent = '';
+    var node = subscribedTpl.content.cloneNode(true);
+    var panel = node.querySelector('.cform-sent');
+    node.querySelector('[data-subscriber-email]').textContent = email;
+    node.querySelector('.cform-sent__again').addEventListener('click', function () {
+      mountSubscribeForm(mount);
+      var input = mount.querySelector('input');
+      if (input) input.focus();
+    });
+    mount.appendChild(node);
+    panel.focus();
+  }
+
   function mountAllForms() {
-    if (!formTpl || !sentTpl) return;
-    Array.prototype.forEach.call(
-      document.querySelectorAll('.contact-form-mount'),
-      mountForm
-    );
+    if (formTpl && sentTpl) {
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.contact-form-mount'),
+        mountForm
+      );
+    }
+    if (subscribeTpl && subscribedTpl) {
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.subscribe-form-mount'),
+        mountSubscribeForm
+      );
+    }
   }
 
   /* ------------------------------------------------------------------------
