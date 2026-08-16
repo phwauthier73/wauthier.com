@@ -122,11 +122,22 @@ la cellule affiche `#ERROR!`.
 La carte « Citation du jour » de l'écran `#/philo` est remplie au chargement
 depuis le workflow n8n « Citation du jour wauthier.com », qui lit le classeur
 Google Sheets `Citations matinales` (colonnes `Date du mail`, `Citation`,
-`Auteur`, `Commentaire`) et renvoie la ligne du jour :
+`Auteur`, `Commentaire`) et renvoie l'archive, la plus ancienne d'abord :
 
 ```json
-{ "date": "16/08/2026", "citation": "", "auteur": "", "commentaire": "" }
+[{ "date": "16/08/2026", "citation": "", "auteur": "", "commentaire": "", "jour": true }]
 ```
+
+Le drapeau `jour` marque la citation à afficher à l'ouverture — celle du jour,
+ou à défaut la plus récente déjà passée. Sous le texte, des flèches
+`<<< jj/mm/aaaa >>>` permettent de remonter l'archive ; la navigation est
+purement locale, tout est chargé en une requête. Les flèches restent masquées
+tant qu'il n'y a qu'une citation, et se désactivent aux deux bouts.
+
+Le workflow plafonne la réponse aux **90 citations les plus récentes**
+(`MAX_CITATIONS`, en tête du nœud Code). Sans ce plafond, la page téléchargerait
+un an d'archive au bout d'un an — chaque entrée pèse près d'un kilo-octet, à
+cause du commentaire.
 
 L'URL est dans `PHILO_QUOTE_ENDPOINT`, en haut de `assets/js/site.js`. L'appel
 est un `GET` fait depuis le navigateur du visiteur : le nœud **Webhook** doit

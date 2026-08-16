@@ -152,31 +152,82 @@
     return /^[«"“]/.test(text) ? text : '« ' + text + ' »';
   }
 
-  function fillQuoteCard(payload) {
-    var row = Array.isArray(payload) ? payload[0] : payload;
-    if (!row || typeof row !== 'object') return;
+  // The archive as served, oldest first, and the entry currently on screen.
+  var quotes  = [];
+  var current = 0;
 
+  function normalise(row) {
+    if (!row || typeof row !== 'object') return null;
+    var citation = firstField(row, ['citation', 'Citation', 'quote']);
+    if (!citation) return null;
+    return {
+      citation:    citation,
+      auteur:      firstField(row, ['auteur', 'Auteur', 'philosophe', 'author']),
+      commentaire: firstField(row, ['commentaire', 'Commentaire', 'explication', 'context']),
+      date:        firstField(row, ['date', 'Date']),
+      jour:        row.jour === true
+    };
+  }
+
+  function showQuote(index) {
+    var card  = document.querySelector('[data-quote-card]');
+    var quote = quotes[index];
+    if (!card || !quote) return;
+    current = index;
+
+    card.querySelector('[data-quote-text]').textContent = quotationMarks(quote.citation);
+
+    if (quote.auteur) {
+      card.querySelector('[data-quote-author]').textContent = '— ' + quote.auteur;
+    }
+    if (quote.commentaire) {
+      card.querySelector('[data-quote-context]').textContent = quote.commentaire;
+    }
+
+    // The card is dated by the quote on screen, not by today — the visitor may
+    // have walked back through the archive.
+    var date = parseQuoteDate(quote.date);
+    if (date) stampDate(date);
+
+    var navDate = card.querySelector('[data-quote-nav-date]');
+    if (navDate) navDate.textContent = quote.date || '';
+
+    var prev = card.querySelector('[data-quote-prev]');
+    var next = card.querySelector('[data-quote-next]');
+    if (prev) prev.disabled = index <= 0;
+    if (next) next.disabled = index >= quotes.length - 1;
+  }
+
+  function setupQuotes(payload) {
+    var rows = Array.isArray(payload) ? payload : [payload];
     var card = document.querySelector('[data-quote-card]');
     if (!card) return;
 
-    var citation = firstField(row, ['citation', 'Citation', 'quote']);
-    if (!citation) return;   // Nothing usable — keep the fallback quote.
+    quotes = [];
+    for (var i = 0; i < rows.length; i++) {
+      var quote = normalise(rows[i]);
+      if (quote) quotes.push(quote);
+    }
+    if (!quotes.length) return;   // Nothing usable — keep the fallback quote.
 
-    var auteur     = firstField(row, ['auteur', 'Auteur', 'philosophe', 'author']);
-    var commentaire = firstField(row, ['commentaire', 'Commentaire', 'explication', 'context']);
+    // The workflow flags today's entry; without a flag, show the newest.
+    var start = quotes.length - 1;
+    for (var j = 0; j < quotes.length; j++) {
+      if (quotes[j].jour) start = j;
+    }
 
-    card.querySelector('[data-quote-text]').textContent = quotationMarks(citation);
+    var nav = card.querySelector('[data-quote-nav]');
+    if (nav && quotes.length > 1) {
+      nav.hidden = false;
+      card.querySelector('[data-quote-prev]').addEventListener('click', function () {
+        showQuote(current - 1);
+      });
+      card.querySelector('[data-quote-next]').addEventListener('click', function () {
+        showQuote(current + 1);
+      });
+    }
 
-    var authorEl = card.querySelector('[data-quote-author]');
-    if (auteur) authorEl.textContent = '— ' + auteur;
-
-    var contextEl = card.querySelector('[data-quote-context]');
-    if (commentaire) contextEl.textContent = commentaire;
-
-    // The card is dated by the quote it shows, not by today: the workflow
-    // falls back to the most recent past row when today's is missing.
-    var date = parseQuoteDate(firstField(row, ['date', 'Date']));
-    if (date) stampDate(date);
+    showQuote(start);
   }
 
   function loadPhiloQuote() {
@@ -191,7 +242,7 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
       })
-      .then(fillQuoteCard)
+      .then(setupQuotes)
       .catch(function () { /* Keep the quote written in index.html. */ });
   }
 

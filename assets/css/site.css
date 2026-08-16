@@ -874,6 +874,43 @@ a.fact:hover { border-color: var(--energie); }
   margin: 0;
   text-wrap: pretty;
 }
+.quote-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: 22px;
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rule);
+}
+/* Sans cette règle, le `display: flex` ci-dessus l'emporte sur l'attribut
+   `hidden` et les flèches s'affichent alors qu'elles ne mènent nulle part. */
+.quote-nav[hidden] { display: none; }
+.quote-nav__btn {
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .12em;
+  color: var(--philo);
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: opacity .18s ease, background-color .18s ease;
+}
+.quote-nav__btn:hover { background: rgba(90, 74, 107, .09); }
+.quote-nav__btn:disabled {
+  opacity: .28;
+  cursor: default;
+  background: none;
+}
+.quote-nav__date {
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 600;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+  /* Largeur fixe : sans elle, les flèches bougent à chaque changement de date. */
+  min-width: 10ch;
+  text-align: center;
+}
 
 .philo-contact {
   border: 1px solid var(--rule);
