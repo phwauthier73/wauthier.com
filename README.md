@@ -18,6 +18,13 @@ assets/img/           Images du projet
 Aucune étape de build, aucune dépendance : ouvrir `index.html` suffit.
 Pour un serveur local :
 
+> **Une seule étape manuelle : le `?v=` des assets.** `index.html` référence
+> `site.css?v=N` et `site.js?v=N`. Après toute modification de l'un des deux,
+> incrémenter `N` dans `index.html`, sinon les visiteurs déjà venus gardent
+> l'ancienne version en cache et ne voient rien changer — y compris vous, en
+> testant. Ces fichiers sont servis sans empreinte dans leur nom, le `?v=` est
+> ce qui en tient lieu.
+
 ```sh
 python3 -m http.server 8000   # puis http://127.0.0.1:8000
 ```
