@@ -11,7 +11,7 @@ Architecture, Le coin philo, SweetLo, Espace Kawa.
 ```
 index.html            Les 7 écrans, en HTML (aucune génération côté serveur)
 assets/css/site.css   Styles — tokens, composants, points de rupture
-assets/js/site.js     Routage, formulaires de contact, date du jour
+assets/js/site.js     Routage, formulaires, citation du jour, date du jour
 assets/img/           Images du projet
 ```
 
@@ -54,8 +54,10 @@ inconnue retombe sur l'accueil.
 
 ## Formulaires de contact
 
-Cinq formulaires (IA & RH, Énergie, Architecture, Philo, SweetLo). Chacun porte
+Quatre formulaires (IA & RH, Énergie, Architecture, SweetLo). Chacun porte
 la couleur d'accent de son activité et nomme l'activité dans sa confirmation.
+L'écran Philo n'a pas de formulaire de contact : il porte le formulaire
+d'inscription à la citation quotidienne, décrit plus bas.
 
 Chaque formulaire envoie vers l'URL de son propre attribut `data-endpoint`,
 dans `index.html`, à côté du point de montage. À défaut il retombe sur
@@ -72,7 +74,7 @@ dans le prototype.
 var CONTACT_ENDPOINT = 'https://…';   // destination par défaut
 ```
 
-**État actuel.** Les cinq formulaires envoient vers le même workflow n8n
+**État actuel.** Les quatre formulaires envoient vers le même workflow n8n
 « Formulaire contact wauthier.com », via `CONTACT_ENDPOINT`. Aucun n'a de
 `data-endpoint` : l'attribut ne sert que si une activité doit un jour partir
 ailleurs.
@@ -167,6 +169,55 @@ Les noms de colonnes sont reconnus par préfixe, côté workflow comme côté si
 `Date du mail` ou `Date`, `Auteur` ou `Philosophe`, `Commentaire` ou
 `Explication`. Renommer une colonne dans le classeur ne casse donc rien tant que
 le préfixe tient.
+
+## Inscription à la citation du jour (Le coin philo)
+
+Sous la carte de citation, l'écran `#/philo` propose de recevoir la citation
+quotidienne par mail. Le formulaire remplace l'ancien formulaire de contact de
+cet écran : c'est le seul des sept écrans à ne pas en avoir.
+
+Prénom, nom et e-mail sont obligatoires ; une zone de commentaire libre reste
+facultative. Le corps envoyé est du JSON :
+
+```json
+{ "firstname": "", "lastname": "", "email": "", "comment": "", "page": "" }
+```
+
+L'URL est dans `PHILO_SUBSCRIBE_ENDPOINT`, en haut de `assets/js/site.js`, et
+pointe vers le workflow n8n « Inscription citation du jour wauthier.com ».
+Comme pour les formulaires de contact, l'appel est un `POST` fait depuis le
+navigateur du visiteur : le nœud **Webhook** doit écouter en `POST` et
+autoriser l'origine du site dans **Allowed Origins (CORS)**. Toute réponse hors
+2xx affiche un message d'erreur sous le formulaire ; un endpoint vide afficherait
+la confirmation sans inscrire personne, exactement comme pour les formulaires de
+contact.
+
+### Côté n8n
+
+Le workflow normalise les cinq champs, écarte les adresses qui ne ressemblent
+pas à une adresse e-mail (nœud « E-mail plausible », qui protège des robots),
+puis écrit l'abonné dans le classeur Google Sheets `mailing_list_philo` :
+
+| Prénom | Nom | E-mail | Date d'inscription | Commentaire |
+| ------ | --- | ------ | ------------------ | ----------- |
+
+L'écriture est un **upsert sur la colonne `E-mail`** : une seconde inscription
+avec la même adresse met la ligne existante à jour au lieu d'en créer une
+seconde, ce qui garde une ligne par abonné. Conséquence à connaître : la
+dernière soumission l'emporte sur toutes les colonnes — la date devient celle de
+la réinscription, et un commentaire laissé vide efface le précédent.
+
+L'adresse est mise en minuscules avant écriture, sans quoi `Jean@x.be` et
+`jean@x.be` créeraient deux lignes.
+
+Comme pour l'archivage des formulaires de contact, l'écriture est en `RAW` et
+doit le rester : en `USER_ENTERED`, un commentaire commençant par `=` serait
+interprété comme une formule.
+
+**Ce qui n'est pas branché.** Le workflow enregistre les abonnés ; il n'envoie
+rien. L'envoi quotidien aux adresses du classeur reste à construire (le
+workflow « Citations Philosophiques » produit la citation du matin, mais la
+pousse vers WhatsApp).
 
 ## Points à connaître
 

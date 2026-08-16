@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=2">
+<link rel="stylesheet" href="assets/css/site.css?v=3">
 </head>
 <body>
 
@@ -430,9 +430,9 @@
 
     <section class="wrap-xs pad-philo-cta">
       <div class="philo-contact">
-        <h2>Prolonger la conversation</h2>
-        <p>Une réaction, une citation à proposer, une question ? Écrivez-moi.</p>
-        <div class="contact-form-mount" data-activity="Le coin philo" data-accent="#5a4a6b"></div>
+        <h2>Recevoir la citation du jour</h2>
+        <p>Chaque matin, la citation et sa mise en perspective arrivent dans votre boîte mail. Inscription libre, désinscription sur simple demande.</p>
+        <div class="subscribe-form-mount" data-accent="#5a4a6b"></div>
       </div>
     </section>
   </div>
@@ -635,6 +635,50 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=2"></script>
+<!-- ======================================================================
+     Inscription à la citation du jour — cloné dans .subscribe-form-mount
+     (écran Le coin philo). Prénom, nom et e-mail sont obligatoires ; le
+     commentaire est libre et facultatif.
+     ====================================================================== -->
+<template id="subscribe-form-tpl">
+  <form class="cform" novalidate>
+    <div class="cform__row">
+      <label class="cform__field">Prénom
+        <input required type="text" name="firstname" autocomplete="given-name" placeholder="Votre prénom">
+      </label>
+      <label class="cform__field">Nom
+        <input required type="text" name="lastname" autocomplete="family-name" placeholder="Votre nom">
+      </label>
+    </div>
+    <label class="cform__field">E-mail
+      <input required type="email" name="email" autocomplete="email" placeholder="vous@exemple.com">
+    </label>
+    <label class="cform__field">
+      <!-- Le libellé est enveloppé : sans cela, `facultatif` deviendrait un
+           élément flex distinct et passerait à la ligne sous « Commentaire ». -->
+      <span>Commentaire <span class="cform__optional">facultatif</span></span>
+      <textarea name="comment" rows="3" placeholder="Un mot, une citation à proposer, un philosophe à suggérer…"></textarea>
+    </label>
+    <p class="cform__note">Votre adresse ne sert qu'à l'envoi de la citation quotidienne. Elle n'est ni cédée ni utilisée à d'autres fins.</p>
+    <p class="cform__error" role="alert" hidden></p>
+    <button class="cform__submit" type="submit">
+      Je m'inscris
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+</template>
+
+<template id="subscribe-done-tpl">
+  <div class="cform-sent" tabindex="-1">
+    <div class="cform-sent__badge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <div class="cform-sent__title">Inscription enregistrée</div>
+    <div class="cform-sent__body">Merci. La citation du jour vous attendra chaque matin à l'adresse <span data-subscriber-email></span>.</div>
+    <button class="cform-sent__again" type="button">Inscrire une autre adresse</button>
+  </div>
+</template>
+
+<script src="assets/js/site.js?v=3"></script>
 </body>
 </html>
