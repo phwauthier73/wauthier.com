@@ -413,6 +413,14 @@
         <hr class="quote-card__hr">
         <div class="quote-card__kicker" style="margin-bottom:14px">Mise en contexte</div>
         <p class="quote-card__context" data-quote-context>À l'heure des flux d'information continus, cette maxime stoïcienne garde toute sa force : ce qui nous agite tient souvent moins aux événements eux-mêmes qu'à la lecture immédiate que nous en faisons. Prendre un instant pour distinguer le fait de son interprétation, c'est déjà retrouver une part de liberté face au bruit de l'actualité.</p>
+
+        <!-- Révélée par site.js quand l'archive compte plus d'une citation :
+             sans elle, les flèches ne mèneraient nulle part. -->
+        <nav class="quote-nav" data-quote-nav hidden aria-label="Naviguer entre les citations">
+          <button type="button" class="quote-nav__btn" data-quote-prev aria-label="Citation précédente">&lt;&lt;&lt;</button>
+          <span class="quote-nav__date" data-quote-nav-date aria-live="polite">&nbsp;</span>
+          <button type="button" class="quote-nav__btn" data-quote-next aria-label="Citation suivante">&gt;&gt;&gt;</button>
+        </nav>
       </div>
     </section>
 
