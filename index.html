@@ -400,16 +400,19 @@
     </section>
 
     <section class="wrap-xs pad-philo-quote">
-      <div class="quote-card">
+      <!-- Le texte ci-dessous est la citation de secours : elle s'affiche telle
+           quelle si le webhook n8n ne répond pas. Voir PHILO_QUOTE_ENDPOINT
+           dans assets/js/site.js. -->
+      <div class="quote-card" data-quote-card>
         <div class="quote-card__head">
           <span class="quote-card__kicker">Citation du jour</span>
           <span class="quote-card__date" data-today>&nbsp;</span>
         </div>
-        <blockquote>« Ce ne sont pas les choses qui troublent les hommes, mais les jugements qu'ils portent sur les choses. »</blockquote>
-        <div class="quote-card__author">— Épictète, <em>Manuel</em></div>
+        <blockquote data-quote-text>« Ce ne sont pas les choses qui troublent les hommes, mais les jugements qu'ils portent sur les choses. »</blockquote>
+        <div class="quote-card__author" data-quote-author>— Épictète, <em>Manuel</em></div>
         <hr class="quote-card__hr">
         <div class="quote-card__kicker" style="margin-bottom:14px">Mise en contexte</div>
-        <p class="quote-card__context">À l'heure des flux d'information continus, cette maxime stoïcienne garde toute sa force : ce qui nous agite tient souvent moins aux événements eux-mêmes qu'à la lecture immédiate que nous en faisons. Prendre un instant pour distinguer le fait de son interprétation, c'est déjà retrouver une part de liberté face au bruit de l'actualité.</p>
+        <p class="quote-card__context" data-quote-context>À l'heure des flux d'information continus, cette maxime stoïcienne garde toute sa force : ce qui nous agite tient souvent moins aux événements eux-mêmes qu'à la lecture immédiate que nous en faisons. Prendre un instant pour distinguer le fait de son interprétation, c'est déjà retrouver une part de liberté face au bruit de l'actualité.</p>
       </div>
     </section>
 
