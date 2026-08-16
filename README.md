@@ -117,6 +117,39 @@ L'écriture dans Sheets est en `RAW` et doit le rester : en `USER_ENTERED`, un
 numéro de téléphone au format international est interprété comme une formule et
 la cellule affiche `#ERROR!`.
 
+## Citation du jour (Le coin philo)
+
+La carte « Citation du jour » de l'écran `#/philo` est remplie au chargement
+depuis le workflow n8n « Citation du jour wauthier.com », qui lit le classeur
+Google Sheets `Citations matinales` (colonnes `Date du mail`, `Citation`,
+`Auteur`, `Commentaire`) et renvoie la ligne du jour :
+
+```json
+{ "date": "16/08/2026", "citation": "", "auteur": "", "commentaire": "" }
+```
+
+L'URL est dans `PHILO_QUOTE_ENDPOINT`, en haut de `assets/js/site.js`. L'appel
+est un `GET` fait depuis le navigateur du visiteur : le nœud **Webhook** doit
+donc, comme celui des formulaires, écouter en `GET` et autoriser l'origine du
+site dans **Allowed Origins (CORS)**.
+
+La date affichée dans l'en-tête de la carte est celle de la citation servie, et
+non celle du jour : le workflow retombe sur la ligne passée la plus récente
+quand celle du jour manque, et dater la carte d'aujourd'hui laisserait croire à
+une citation fraîche.
+
+**Citation de secours.** Le HTML de `index.html` contient une citation
+d'Épictète, affichée telle quelle si quoi que ce soit échoue — endpoint vide,
+réseau coupé, workflow désactivé, classeur vide. Rien n'est signalé au visiteur :
+sur une page qui invite à ralentir, une citation datée passe mieux qu'un message
+d'erreur. C'est aussi pourquoi cette citation de secours doit rester présentable
+et ne pas être vidée.
+
+Les noms de colonnes sont reconnus par préfixe, côté workflow comme côté site :
+`Date du mail` ou `Date`, `Auteur` ou `Philosophe`, `Commentaire` ou
+`Explication`. Renommer une colonne dans le classeur ne casse donc rien tant que
+le préfixe tient.
+
 ## Points à connaître
 
 - **Qualité des images de pâtisserie.** `cake-06`, `cake-08`, `cake-13` et
