@@ -148,6 +148,33 @@ Le workflow plafonne la réponse aux **90 citations les plus récentes**
 un an d'archive au bout d'un an — chaque entrée pèse près d'un kilo-octet, à
 cause du commentaire.
 
+### Le classeur est retrouvé par son nom, jamais par son identifiant
+
+Le processus matinal ne complète pas le classeur : il en **recrée un neuf chaque
+matin**, avec un nouvel identifiant de fichier *et* un nouveau gid d'onglet, puis
+met le précédent à la corbeille. Seuls deux repères sont stables : le nom du
+fichier, `Citations matinales`, et le titre de l'onglet, `Untitled`.
+
+Le workflow commence donc par un appel à l'API Drive
+(`GET https://www.googleapis.com/drive/v3/files`) qui cherche le classeur par
+son nom, trié par date de création décroissante et **hors corbeille**, puis passe
+l'identifiant trouvé au nœud Google Sheets. L'onglet est désigné par son titre,
+pas par son gid.
+
+Cet appel réutilise le credential Google Sheets : sa portée couvre déjà la
+recherche de classeurs — c'est elle qui alimente le sélecteur « From list » du
+nœud Sheets. Aucun credential Google Drive séparé n'est nécessaire.
+
+**À ne pas refaire :** figer l'identifiant du classeur dans le nœud Sheets. Un
+fichier à la corbeille reste lisible par l'API pendant trente jours : le workflow
+continue de répondre, sans erreur, en servant une archive gelée au jour de la
+suppression. Le site affiche alors une vieille citation avec l'air de
+fonctionner, et rien dans les journaux n'indique un problème. C'est exactement
+ce qui s'est produit entre le 16 et le 22 août 2026.
+
+Le filtre `trashed = false` est ce qui empêche la recherche de retomber sur une
+copie corbeillée.
+
 L'URL est dans `PHILO_QUOTE_ENDPOINT`, en haut de `assets/js/site.js`. L'appel
 est un `GET` fait depuis le navigateur du visiteur : le nœud **Webhook** doit
 donc, comme celui des formulaires, écouter en `GET` et autoriser l'origine du
