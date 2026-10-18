@@ -88,7 +88,7 @@
 
   var TITLES = {
     home:    'Wauthier.com — Espace familial Wauthier',
-    ia:      'Consultance IA & ateliers Déclic | Wauthier.com',
+    ia:      'Consultance IA · RH | Wauthier.com',
     energie: 'Certificats & audits énergétiques PEB | Wauthier.com',
     archi:   'Architecture | Wauthier.com',
     philo:   'Le coin philo | Wauthier.com',

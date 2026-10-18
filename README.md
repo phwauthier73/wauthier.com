@@ -130,7 +130,7 @@ la cellule affiche `#ERROR!`.
 
 ## Demande d'atelier Déclic (IA & RH)
 
-L'écran `#/ia` présente l'expertise IA de Philippe puis trois ateliers :
+L'écran `#/ia` (« Consultance IA · RH ») présente l'expertise IA de Philippe puis trois ateliers :
 IA&RH (équipes RH), IA&Codir (comités de direction) et AI@WORK (équipes en
 entreprise). Chaque logo ouvre la brochure PDF correspondante (`assets/pdf/`)
 dans un nouvel onglet.

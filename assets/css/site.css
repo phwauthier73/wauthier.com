@@ -154,6 +154,8 @@ main { flex: 1; }
   text-wrap: pretty;
 }
 
+.lede--follow { margin-top: 16px; }
+
 .h-display {
   font-family: var(--display);
   font-weight: 700;
