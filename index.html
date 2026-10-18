@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=6">
+<link rel="stylesheet" href="assets/css/site.css?v=7">
 </head>
 <body>
 
@@ -70,7 +70,19 @@
 
     <section class="wrap bento" aria-label="Nos activités">
       <div class="bento__grid">
-
+        <!-- Ordre d'importance : IA & RH, Énergie, SweetLo, philo, Architecture,
+             Kawa. L'ordre, la taille et la position des tuiles le reflètent. -->
+        <a class="tile tile--ia" href="#/ia" data-route-link="ia">
+          <div class="tile__logo">
+            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
+          </div>
+          <div>
+            <h3>Consultance IA &amp; RH</h3>
+            <span class="tile__cue">Découvrir
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5f9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </a>
 
         <a class="tile tile--energie" href="#/energie" data-route-link="energie">
           <div>
@@ -84,41 +96,26 @@
           </div>
         </a>
 
-        <a class="tile tile--ia" href="#/ia" data-route-link="ia">
-          <div class="tile__logo">
-            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
-          </div>
-          <div>
-            <h3>Consultance IA &amp; RH</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5f9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </div>
-        </a>
-
         <a class="tile tile--sweet" href="https://www.facebook.com/sweetlopatisserie?locale=fr_FR" target="_blank" rel="noopener noreferrer">
           <img class="tile__img" src="assets/img/cake-06.png" alt="" loading="lazy">
           <div class="tile__scrim"></div>
-          <div class="tile__body tile__body--sm">
+          <div class="tile__body">
             <h3>SweetLo</h3>
-            <span class="tile__cue tile__cue--sm">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="tile__cue">Découvrir
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
           </div>
         </a>
 
-        <a class="tile tile--kawa" href="#/kawa" data-route-link="kawa">
-          <div>
-            <h3>Espace Kawa</h3>
-            <span class="tile__cue tile__cue--sm">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#46522f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
+          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
+          <div class="tile__inner">
+            <h3>Le coin philo</h3>
+            <span class="tile__cue">Découvrir
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
           </div>
-          <div class="tile__mark">
-            <img src="assets/img/espace-kawa-logo.png" alt="Espace Kawa" loading="lazy" width="721" height="543">
-          </div>
         </a>
-
 
         <!-- Architecture : écran pas encore publié — tuile non cliquable. -->
         <div class="tile tile--archi tile--soon">
@@ -130,13 +127,15 @@
           </div>
         </div>
 
-        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
-          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
-          <div class="tile__inner">
-            <h3>Le coin philo</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <a class="tile tile--kawa" href="#/kawa" data-route-link="kawa">
+          <div>
+            <h3>Espace Kawa</h3>
+            <span class="tile__cue tile__cue--sm">Découvrir
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#46522f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
+          </div>
+          <div class="tile__mark">
+            <img src="assets/img/espace-kawa-logo.png" alt="Espace Kawa" loading="lazy" width="721" height="543">
           </div>
         </a>
 
@@ -795,6 +794,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=6"></script>
+<script src="assets/js/site.js?v=7"></script>
 </body>
 </html>
