@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=8">
+<link rel="stylesheet" href="assets/css/site.css?v=9">
 </head>
 <body>
 
@@ -742,6 +742,11 @@
       <textarea name="days" rows="3" placeholder="Dates ou jours de la semaine qui vous conviennent…"></textarea>
     </label>
 
+    <label class="cform__field">
+      <span>Questions ou commentaires <span class="cform__optional">facultatif</span></span>
+      <textarea name="comments" rows="4" placeholder="Vos attentes, le contexte de votre équipe, une question sur l'atelier…"></textarea>
+    </label>
+
     <p class="cform__error" role="alert" hidden></p>
     <button class="cform__submit" type="submit">
       Envoyer la demande
@@ -794,6 +799,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=8"></script>
+<script src="assets/js/site.js?v=9"></script>
 </body>
 </html>

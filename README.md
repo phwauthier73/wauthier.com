@@ -158,7 +158,8 @@ voyagent en plus sous `workshop` :
 
 ```json
 { "workshop": { "atelier": "", "entreprise": "", "adresse_entreprise": "", "tva": "",
-  "participants": "", "adresse_atelier": "", "horaire": "", "jours": "" } }
+  "participants": "", "adresse_atelier": "", "horaire": "", "jours": "",
+  "commentaires": "" } }
 ```
 
 ## Citation du jour (Le coin philo)
