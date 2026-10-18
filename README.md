@@ -13,6 +13,7 @@ index.html            Les 7 écrans, en HTML (aucune génération côté serveur
 assets/css/site.css   Styles — tokens, composants, points de rupture
 assets/js/site.js     Routage, formulaires, citation du jour, date du jour
 assets/img/           Images du projet
+assets/pdf/           Brochures des trois ateliers Déclic (ouvertes depuis l'écran IA & RH)
 ```
 
 Aucune étape de build, aucune dépendance : ouvrir `index.html` suffit.
@@ -48,13 +49,21 @@ bouton « précédent » du navigateur :
 | Espace Kawa  | `#/kawa`         |
 | SweetLo      | `#/sweetlo`      |
 
+**Liens externes et écrans en attente.** Dans la navigation et sur la tuile
+de l'accueil, SweetLo ouvre la page Facebook
+`facebook.com/sweetlopatisserie` dans un nouvel onglet ; l'écran `#/sweetlo`
+reste dans le HTML mais n'est plus lié. Architecture est retiré de la
+navigation et sa tuile, non cliquable, affiche « À venir » ; l'écran
+`#/architecture` reste joignable par son URL.
+
 Le contenu des sept écrans est présent dans le HTML initial (les écrans
 inactifs sont masqués), donc indexable par les moteurs de recherche. Une URL
 inconnue retombe sur l'accueil.
 
 ## Formulaires de contact
 
-Quatre formulaires (IA & RH, Énergie, Architecture, SweetLo). Chacun porte
+Trois formulaires de contact (Énergie, Architecture, SweetLo), plus le
+formulaire de demande d'atelier de l'écran IA & RH, décrit plus bas. Chacun porte
 la couleur d'accent de son activité et nomme l'activité dans sa confirmation.
 L'écran Philo n'a pas de formulaire de contact : il porte le formulaire
 d'inscription à la citation quotidienne, décrit plus bas.
@@ -125,6 +134,32 @@ workflow renverrait les demandes PEB chez Philippe.
 L'écriture dans Sheets est en `RAW` et doit le rester : en `USER_ENTERED`, un
 numéro de téléphone au format international est interprété comme une formule et
 la cellule affiche `#ERROR!`.
+
+## Demande d'atelier Déclic (IA & RH)
+
+L'écran `#/ia` (« Consultance IA · RH ») présente l'expertise IA de Philippe puis trois ateliers :
+IA&RH (équipes RH), IA&Codir (comités de direction) et AI@WORK (équipes en
+entreprise). Chaque logo ouvre la brochure PDF correspondante (`assets/pdf/`)
+dans un nouvel onglet.
+
+Le formulaire de contact de cet écran est remplacé par la partie « Informations
+sur l'atelier » du formulaire des brochures, précédée d'une liste déroulante
+« Atelier souhaité ». Seuls le nom de l'entreprise et les coordonnées de la
+personne de contact (nom, e-mail, téléphone) sont obligatoires. Le maximum de
+participants suit l'atelier choisi (8 pour IA&RH, 10 sinon). Le bouton
+« Demander cet atelier » d'une carte présélectionne l'atelier dans la liste.
+
+La demande part vers `CONTACT_ENDPOINT`, avec les six champs habituels, ce qui
+permet au workflow n8n existant de l'envoyer et de l'archiver sans modification :
+`activity` vaut `Atelier Déclic IA&RH`, `Atelier Déclic IA&Codir`,
+`Atelier Déclic AI@WORK` ou `Atelier Déclic (atelier à définir)`, et `message`
+contient un récapitulatif lisible de tous les champs. Les champs détaillés
+voyagent en plus sous `workshop` :
+
+```json
+{ "workshop": { "atelier": "", "entreprise": "", "adresse_entreprise": "", "tva": "",
+  "participants": "", "adresse_atelier": "", "horaire": "", "jours": "" } }
+```
 
 ## Citation du jour (Le coin philo)
 

@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=3">
+<link rel="stylesheet" href="assets/css/site.css?v=8">
 </head>
 <body>
 
@@ -44,10 +44,9 @@
     <ul class="nav__links">
       <li><a class="nav__link" href="#/ia"        data-route-link="ia">IA &amp; RH</a></li>
       <li><a class="nav__link" href="#/energie"   data-route-link="energie">Énergie</a></li>
-      <li><a class="nav__link" href="#/architecture" data-route-link="archi">Architecture</a></li>
       <li><a class="nav__link" href="#/philo"     data-route-link="philo">Philo</a></li>
       <li><a class="nav__link" href="#/kawa"      data-route-link="kawa">Kawa</a></li>
-      <li><a class="nav__link" href="#/sweetlo"   data-route-link="sweet">SweetLo</a></li>
+      <li><a class="nav__link" href="https://www.facebook.com/sweetlopatisserie?locale=fr_FR" target="_blank" rel="noopener noreferrer">SweetLo</a></li>
     </ul>
   </nav>
 
@@ -71,21 +70,23 @@
 
     <section class="wrap bento" aria-label="Nos activités">
       <div class="bento__grid">
-
-        <a class="tile tile--archi" href="#/architecture" data-route-link="archi">
-          <img class="tile__img" src="assets/img/architecture.webp" alt="" loading="lazy">
-          <div class="tile__scrim"></div>
-          <div class="tile__body">
-            <h3>Architecture</h3>
+        <!-- Ordre d'affichage : Énergie, IA & RH, SweetLo, Architecture, philo,
+             Kawa. L'ordre, la taille et la position des tuiles suivent cet ordre. -->
+        <a class="tile tile--energie" href="#/energie" data-route-link="energie">
+          <div>
+            <h3>Certificats &amp; audits énergétiques</h3>
             <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a6b47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
+          </div>
+          <div class="tile__art">
+            <img src="assets/img/peb-house.png" alt="" loading="lazy">
           </div>
         </a>
 
         <a class="tile tile--ia" href="#/ia" data-route-link="ia">
           <div class="tile__logo">
-            <img src="assets/img/ia-rh-logo.png" alt="IA &amp; RH — Atelier Déclic" loading="lazy">
+            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
           </div>
           <div>
             <h3>Consultance IA &amp; RH</h3>
@@ -95,13 +96,33 @@
           </div>
         </a>
 
-        <a class="tile tile--sweet" href="#/sweetlo" data-route-link="sweet">
+        <a class="tile tile--sweet" href="https://www.facebook.com/sweetlopatisserie?locale=fr_FR" target="_blank" rel="noopener noreferrer">
           <img class="tile__img" src="assets/img/cake-06.png" alt="" loading="lazy">
           <div class="tile__scrim"></div>
-          <div class="tile__body tile__body--sm">
+          <div class="tile__body">
             <h3>SweetLo</h3>
-            <span class="tile__cue tile__cue--sm">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            <span class="tile__cue">Découvrir
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Architecture : écran pas encore publié — tuile non cliquable. -->
+        <div class="tile tile--archi tile--soon">
+          <img class="tile__img" src="assets/img/architecture.webp" alt="" loading="lazy">
+          <div class="tile__scrim"></div>
+          <div class="tile__body">
+            <h3>Architecture</h3>
+            <span class="tile__cue">À venir</span>
+          </div>
+        </div>
+
+        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
+          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
+          <div class="tile__inner">
+            <h3>Le coin philo</h3>
+            <span class="tile__cue">Découvrir
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
           </div>
         </a>
@@ -118,28 +139,6 @@
           </div>
         </a>
 
-        <a class="tile tile--energie" href="#/energie" data-route-link="energie">
-          <div>
-            <h3>Certificats &amp; audits énergétiques</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a6b47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </div>
-          <div class="tile__art">
-            <img src="assets/img/peb-house.png" alt="" loading="lazy">
-          </div>
-        </a>
-
-        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
-          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
-          <div class="tile__inner">
-            <h3>Le coin philo</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </div>
-        </a>
-
       </div>
     </section>
   </div>
@@ -147,7 +146,7 @@
   <!-- ====================================================================
        IA & RH
        ==================================================================== -->
-  <div class="screen" data-screen="ia" aria-label="IA &amp; RH" hidden>
+  <div class="screen" data-screen="ia" aria-label="Consultance IA · RH" hidden>
 
     <section class="wrap-md back">
       <a class="back__link" href="#/" data-route-link="home">
@@ -157,62 +156,93 @@
 
     <section class="wrap-md split">
       <div>
-        <p class="eyebrow eyebrow--tight ia-eyebrow">Atelier Déclic · IA &amp; RH</p>
-        <h1 class="h-display">Libérez le potentiel de l'IA dans vos RH.</h1>
-        <p class="lede">Une demi-journée expérientielle, dans vos locaux, pour déclencher une adoption naturelle et éclairée de l'IA par les professionnels RH.</p>
+        <p class="eyebrow eyebrow--tight ia-eyebrow">Consultance IA · RH</p>
+        <h1 class="h-display">Faire de l'IA un levier concret pour vos équipes.</h1>
+        <p class="lede">J'accompagne les organisations dans une adoption naturelle, éclairée et responsable de l'intelligence artificielle&nbsp;: des RH au comité de direction, jusqu'aux équipes de terrain.</p>
+        <p class="lede lede--follow">Pour amorcer cette démarche, je propose les ateliers Déclic en entreprise.</p>
       </div>
-      <div class="ia-logo-panel">
-        <img src="assets/img/ia-rh-logo.png" alt="IA &amp; RH — Atelier Déclic" width="1272" height="590">
+      <div class="ia-profile">
+        <p class="ia-profile__kicker">Philippe Wauthier</p>
+        <ul class="ia-profile__list">
+          <li><strong>Ingénieur</strong> de formation</li>
+          <li><strong>Ancien DRH</strong> et membre de comités de direction</li>
+          <li>Aujourd'hui en charge de <strong>l'innovation et de l'IA</strong> en entreprise</li>
+        </ul>
+        <p class="ia-profile__note">Une double expertise humaine et technologique, nourrie par le déploiement réel de l'IA en entreprise.</p>
       </div>
     </section>
 
     <section class="wrap-sm cards">
       <div class="card">
-        <p class="card__label">Objectif</p>
-        <p>Déclencher une adoption naturelle et éclairée de l'IA par les professionnels RH.</p>
+        <p class="card__label">Comprendre</p>
+        <p>Les fondamentaux de l'IA, ses possibilités et ses limites, expliqués sans jargon à des publics non techniques.</p>
       </div>
       <div class="card">
-        <p class="card__label">Pour qui</p>
-        <p>Toutes les équipes RH — curieuses, pas techniques mais déjà connectées.</p>
+        <p class="card__label">Pratiquer</p>
+        <p>Des exercices avec ChatGPT, Claude et d'autres outils, inspirés de situations professionnelles réelles.</p>
       </div>
       <div class="card">
-        <p class="card__label">Avec Philippe</p>
-        <p>DRH expérimenté et passionné d'intelligence artificielle.</p>
+        <p class="card__label">Encadrer</p>
+        <p>Confidentialité, fiabilité des réponses, bonnes pratiques&nbsp;: les réflexes pour un usage responsable.</p>
       </div>
     </section>
 
-    <section class="wrap-sm pad-steps">
+    <section class="wrap-md pad-offers">
       <div class="rule-top">
-        <h2 class="section-label">Au programme — 1/2 journée en vos locaux</h2>
-        <div class="steps">
-          <div class="step">
-            <div class="step__num">01</div>
-            <div>
-              <h3>Comprendre les fondamentaux de l'IA appliqués aux RH</h3>
-              <p>Poser les bases, sans jargon, pour une équipe RH non technique.</p>
+        <h2 class="section-label">Trois ateliers Déclic — 4 heures dans vos locaux</h2>
+        <div class="offers">
+
+          <article class="offer">
+            <a class="offer__logo" href="assets/pdf/Atelier_Declic_IA-RH_2026.pdf" target="_blank" rel="noopener" title="Ouvrir la brochure IA&amp;RH (PDF)">
+              <img src="assets/img/atelier-ia-rh.png" alt="Atelier Déclic IA &amp; RH — ouvrir la brochure PDF" width="546" height="259" loading="lazy">
+            </a>
+            <p class="offer__audience">Pour les équipes RH</p>
+            <h3>Libérez le potentiel de l'IA dans vos RH</h3>
+            <p>Recrutement, paie, développement des talents, coaching, analyse des données RH&nbsp;: des cas d'usage concrets pour gagner du temps et se recentrer sur l'accompagnement humain.</p>
+            <ul class="offer__facts">
+              <li>8 participants max.</li>
+              <li>750 € HTVA</li>
+            </ul>
+            <div class="offer__actions">
+              <a class="offer__pdf" href="assets/pdf/Atelier_Declic_IA-RH_2026.pdf" target="_blank" rel="noopener">Brochure PDF</a>
+              <button class="offer__pick" type="button" data-pick-workshop="IA&amp;RH">Demander cet atelier</button>
             </div>
-          </div>
-          <div class="step">
-            <div class="step__num">02</div>
-            <div>
-              <h3>Explorer des cas d'usage concrets</h3>
-              <p>Talent acquisition, payroll, talent development, coaching, analyse des données RH… des exemples accessibles dans vos disciplines.</p>
+          </article>
+
+          <article class="offer">
+            <a class="offer__logo" href="assets/pdf/Atelier_Declic_IA-Codir_2026.pdf" target="_blank" rel="noopener" title="Ouvrir la brochure IA&amp;Codir (PDF)">
+              <img src="assets/img/atelier-ia-codir.png" alt="Atelier Déclic IA &amp; Codir — ouvrir la brochure PDF" width="541" height="255" loading="lazy">
+            </a>
+            <p class="offer__audience">Pour les comités de direction</p>
+            <h3>Libérez le potentiel de l'IA dans votre Codir</h3>
+            <p>Identifier les opportunités, mesurer les risques et piloter le déploiement de l'IA&nbsp;: le Codir clarifie son rôle dans la gouvernance de l'IA de l'organisation.</p>
+            <ul class="offer__facts">
+              <li>10 participants max.</li>
+              <li>850 € HTVA</li>
+            </ul>
+            <div class="offer__actions">
+              <a class="offer__pdf" href="assets/pdf/Atelier_Declic_IA-Codir_2026.pdf" target="_blank" rel="noopener">Brochure PDF</a>
+              <button class="offer__pick" type="button" data-pick-workshop="IA&amp;Codir">Demander cet atelier</button>
             </div>
-          </div>
-          <div class="step">
-            <div class="step__num">03</div>
-            <div>
-              <h3>Pratiquer avec ChatGPT et d'autres outils</h3>
-              <p>Une prise en main guidée, sans prérequis technique.</p>
+          </article>
+
+          <article class="offer">
+            <a class="offer__logo" href="assets/pdf/Atelier_Declic_AI_at_WORK_2026.pdf" target="_blank" rel="noopener" title="Ouvrir la brochure AI@WORK (PDF)">
+              <img src="assets/img/atelier-ai-at-work.png" alt="Atelier Déclic AI@WORK — ouvrir la brochure PDF" width="543" height="253" loading="lazy">
+            </a>
+            <p class="offer__audience">Pour les équipes en entreprise</p>
+            <h3>Libérez le potentiel de l'IA dans vos équipes</h3>
+            <p>Collaborateurs, managers et responsables découvrent des applications utiles au quotidien pour gagner du temps, améliorer la qualité de leur travail et développer leur créativité.</p>
+            <ul class="offer__facts">
+              <li>10 participants max.</li>
+              <li>750 € HTVA</li>
+            </ul>
+            <div class="offer__actions">
+              <a class="offer__pdf" href="assets/pdf/Atelier_Declic_AI_at_WORK_2026.pdf" target="_blank" rel="noopener">Brochure PDF</a>
+              <button class="offer__pick" type="button" data-pick-workshop="AI@WORK">Demander cet atelier</button>
             </div>
-          </div>
-          <div class="step">
-            <div class="step__num">04</div>
-            <div>
-              <h3>Repartir avec des réflexes activables</h3>
-              <p>Des réflexes simples, immédiatement mobilisables au retour au bureau.</p>
-            </div>
-          </div>
+          </article>
+
         </div>
       </div>
     </section>
@@ -220,26 +250,26 @@
     <section class="wrap-sm pad-facts">
       <div class="facts">
         <div class="fact fact--top">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a4d6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a4d6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           <div>
-            <div class="fact__label">Groupe</div>
-            <div class="fact__value">Maximum 8 participants</div>
+            <div class="fact__label">Format</div>
+            <div class="fact__value">4 heures sur site, le matin (8h30–12h30) ou l'après-midi (13h30–17h30)</div>
           </div>
         </div>
         <div class="fact fact--top">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3a4d6b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
           <div>
-            <div class="fact__label">Matériel</div>
-            <div class="fact__value">PC, connexion internet et un compte ChatGPT (offre gratuite suffit)</div>
+            <div class="fact__label">Prérequis</div>
+            <div class="fact__value">Un PC, une connexion Internet et un compte ChatGPT actif — ou Claude pour AI@WORK (formule payante recommandée)</div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="wrap-sm pad-cta">
-      <div class="cta-dark">
-        <h2>Intéressé par cette expérience ?</h2>
-        <p>Parlez-moi de votre équipe RH et de vos disponibilités (matin 8h30–12h30 ou après-midi 13h30–17h30). Je reviens vers vous avec une proposition concrète.</p>
+      <div class="cta-dark" id="demande-atelier">
+        <h2>Organisez votre atelier Déclic</h2>
+        <p>Choisissez l'atelier et donnez-moi les informations utiles à son organisation. Seuls le nom de l'entreprise et vos coordonnées sont obligatoires&nbsp;: on affine le reste ensemble.</p>
         <div class="cta-dark__links">
           <a class="cta-dark__link" href="mailto:philippe@wauthier.com">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8ea3c9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>philippe@wauthier.com
@@ -249,7 +279,7 @@
           </a>
         </div>
         <div class="cta-dark__form-shell">
-          <div class="contact-form-mount" data-activity="Atelier Déclic IA &amp; RH" data-accent="#1f5f9e"></div>
+          <div class="workshop-form-mount" data-accent="#1f5f9e"></div>
         </div>
       </div>
     </section>
@@ -643,6 +673,84 @@
 </template>
 
 <!-- ======================================================================
+     Demande d'organisation d'atelier Déclic — cloné dans .workshop-form-mount
+     (écran IA & RH). Reprend la partie « Informations sur l'atelier » du
+     formulaire des brochures PDF. Seuls le nom de l'entreprise et les
+     coordonnées de la personne de contact sont obligatoires.
+     ====================================================================== -->
+<template id="workshop-form-tpl">
+  <form class="cform" novalidate>
+    <label class="cform__field">Atelier souhaité
+      <select name="workshop">
+        <option value="">À définir ensemble</option>
+        <option value="IA&amp;RH" data-max="8">Atelier Déclic IA&amp;RH — équipes RH</option>
+        <option value="IA&amp;Codir" data-max="10">Atelier Déclic IA&amp;Codir — comités de direction</option>
+        <option value="AI@WORK" data-max="10">Atelier Déclic AI@WORK — équipes en entreprise</option>
+      </select>
+    </label>
+
+    <label class="cform__field">Nom de l'entreprise
+      <input required type="text" name="company" autocomplete="organization" placeholder="Votre entreprise">
+    </label>
+    <div class="cform__row">
+      <label class="cform__field">
+        <span>Adresse de l'entreprise <span class="cform__optional">facultatif</span></span>
+        <input type="text" name="company_address" autocomplete="street-address" placeholder="Rue, n°, code postal, localité">
+      </label>
+      <label class="cform__field">
+        <span>N° de TVA <span class="cform__optional">facultatif</span></span>
+        <input type="text" name="vat" placeholder="BE0…">
+      </label>
+    </div>
+
+    <fieldset class="cform__group">
+      <legend>Personne de contact</legend>
+      <label class="cform__field">Nom
+        <input required type="text" name="name" autocomplete="name" placeholder="Prénom et nom">
+      </label>
+      <div class="cform__row">
+        <label class="cform__field">E-mail
+          <input required type="email" name="email" autocomplete="email" placeholder="vous@exemple.com">
+        </label>
+        <label class="cform__field">Téléphone
+          <input required type="tel" name="phone" autocomplete="tel" placeholder="+32 …">
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="cform__row">
+      <label class="cform__field">
+        <span>Nombre de participants <span class="cform__optional" data-max-hint>maximum 10</span></span>
+        <input type="number" name="participants" min="1" max="10" inputmode="numeric" placeholder="ex. 8">
+      </label>
+      <label class="cform__field">
+        <span>Adresse de l'atelier <span class="cform__optional">facultatif</span></span>
+        <input type="text" name="workshop_address" placeholder="Si différente de celle de l'entreprise">
+      </label>
+    </div>
+
+    <fieldset class="cform__group">
+      <legend>Horaire souhaité <span class="cform__optional">facultatif</span></legend>
+      <div class="cform__checks">
+        <label class="cform__check"><input type="checkbox" name="slot" value="Matin (8h30–12h30)"> Matin (8h30–12h30)</label>
+        <label class="cform__check"><input type="checkbox" name="slot" value="Après-midi (13h30–17h30)"> Après-midi (13h30–17h30)</label>
+      </div>
+    </fieldset>
+
+    <label class="cform__field">
+      <span>Jours de préférence <span class="cform__optional">facultatif</span></span>
+      <textarea name="days" rows="3" placeholder="Dates ou jours de la semaine qui vous conviennent…"></textarea>
+    </label>
+
+    <p class="cform__error" role="alert" hidden></p>
+    <button class="cform__submit" type="submit">
+      Envoyer la demande
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+  </form>
+</template>
+
+<!-- ======================================================================
      Inscription à la citation du jour — cloné dans .subscribe-form-mount
      (écran Le coin philo). Prénom, nom et e-mail sont obligatoires ; le
      commentaire est libre et facultatif.
@@ -686,6 +794,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=3"></script>
+<script src="assets/js/site.js?v=8"></script>
 </body>
 </html>
