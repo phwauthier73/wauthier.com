@@ -427,7 +427,8 @@
         participants:       val('participants'),
         adresse_atelier:    val('workshop_address'),
         horaire:            slots.join(', '),
-        jours:              val('days')
+        jours:              val('days'),
+        commentaires:       val('comments')
       };
 
       var activity = 'Atelier Déclic ' + (select.value || '(atelier à définir)');
@@ -440,7 +441,8 @@
         'Nombre de participants : '  + (details.participants || '—'),
         'Adresse de l\'atelier : '   + (details.adresse_atelier || '—'),
         'Horaire souhaité : '        + (details.horaire || '—'),
-        'Jours de préférence : '     + (details.jours || '—')
+        'Jours de préférence : '     + (details.jours || '—'),
+        'Questions ou commentaires : ' + (details.commentaires || '—')
       ].join('\n');
 
       var data = {
