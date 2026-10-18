@@ -88,7 +88,7 @@
 
   var TITLES = {
     home:    'Wauthier.com — Espace familial Wauthier',
-    ia:      'Consultance IA & RH — Atelier Déclic | Wauthier.com',
+    ia:      'Consultance IA & ateliers Déclic | Wauthier.com',
     energie: 'Certificats & audits énergétiques PEB | Wauthier.com',
     archi:   'Architecture | Wauthier.com',
     philo:   'Le coin philo | Wauthier.com',
@@ -353,6 +353,178 @@
   }
 
   /* ------------------------------------------------------------------------
+     Workshop request on the IA & RH screen
+     ------------------------------------------------------------------------
+     Replaces the IA screen's contact form with the « Informations sur
+     l'atelier » block of the PDF brochures. Only the company name and the
+     contact person's name, email and phone are required.
+
+     It posts to the same destination as the contact forms and keeps their six
+     fields — name, phone, email, message, activity, page — so the n8n
+     workflow « Formulaire contact wauthier.com » mails and archives it
+     unchanged: `message` carries a readable summary of the whole request and
+     `activity` names the workshop chosen. The individual fields travel
+     alongside, under `workshop`, for a workflow that wants them one by one.
+     ---------------------------------------------------------------------- */
+  var workshopTpl = document.getElementById('workshop-form-tpl');
+
+  function mountWorkshopForm(mount, preset) {
+    var accent   = mount.getAttribute('data-accent')   || '#16150f';
+    var endpoint = mount.getAttribute('data-endpoint') || CONTACT_ENDPOINT;
+    mount.style.setProperty('--accent', accent);
+
+    mount.textContent = '';
+    var form = workshopTpl.content.cloneNode(true).querySelector('form');
+    var errorBox = form.querySelector('.cform__error');
+    var submit   = form.querySelector('.cform__submit');
+    var select   = form.elements.workshop;
+    var count    = form.elements.participants;
+    var maxHint  = form.querySelector('[data-max-hint]');
+
+    function fail(message) {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    // The group size cap differs per workshop (8 for IA&RH, 10 otherwise).
+    function syncMax() {
+      var option = select.options[select.selectedIndex];
+      var max = (option && option.getAttribute('data-max')) || '10';
+      count.max = max;
+      maxHint.textContent = 'maximum ' + max;
+    }
+    select.addEventListener('change', syncMax);
+    if (preset) select.value = preset;
+    syncMax();
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorBox.hidden = true;
+
+      if (!form.checkValidity()) {
+        var firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
+        if (firstInvalid === count) {
+          fail('Le nombre de participants doit être compris entre 1 et ' + count.max + ' pour cet atelier.');
+        } else {
+          fail("Merci d'indiquer le nom de l'entreprise ainsi que le nom, l'e-mail et le téléphone de la personne de contact.");
+        }
+        return;
+      }
+
+      function val(name) { return form.elements[name].value.trim(); }
+
+      var slots = Array.prototype.filter.call(
+        form.querySelectorAll('input[name="slot"]'),
+        function (box) { return box.checked; }
+      ).map(function (box) { return box.value; });
+
+      var details = {
+        atelier:            select.value || 'À définir',
+        entreprise:         val('company'),
+        adresse_entreprise: val('company_address'),
+        tva:                val('vat'),
+        participants:       val('participants'),
+        adresse_atelier:    val('workshop_address'),
+        horaire:            slots.join(', '),
+        jours:              val('days')
+      };
+
+      var activity = 'Atelier Déclic ' + (select.value || '(atelier à définir)');
+
+      var summary = [
+        'Atelier : '                 + details.atelier,
+        'Entreprise : '              + details.entreprise,
+        'Adresse de l\'entreprise : ' + (details.adresse_entreprise || '—'),
+        'N° de TVA : '               + (details.tva || '—'),
+        'Nombre de participants : '  + (details.participants || '—'),
+        'Adresse de l\'atelier : '   + (details.adresse_atelier || '—'),
+        'Horaire souhaité : '        + (details.horaire || '—'),
+        'Jours de préférence : '     + (details.jours || '—')
+      ].join('\n');
+
+      var data = {
+        name:     val('name'),
+        phone:    val('phone'),
+        email:    val('email'),
+        message:  summary,
+        activity: activity,
+        page:     window.location.href,
+        workshop: details
+      };
+
+      if (!endpoint) {
+        showWorkshopSent(mount, activity, accent);
+        return;
+      }
+
+      submit.disabled = true;
+      var original = submit.firstChild.nodeValue;
+      submit.firstChild.nodeValue = 'Envoi… ';
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          showWorkshopSent(mount, activity, accent);
+        })
+        .catch(function () {
+          submit.disabled = false;
+          submit.firstChild.nodeValue = original;
+          fail("L'envoi a échoué. Réessayez, ou écrivez directement à philippe@wauthier.com.");
+        });
+    });
+
+    mount.appendChild(form);
+  }
+
+  function showWorkshopSent(mount, activity, accent) {
+    mount.textContent = '';
+    var node = sentTpl.content.cloneNode(true);
+    var panel = node.querySelector('.cform-sent');
+    node.querySelector('.cform-sent__title').textContent = 'Demande envoyée';
+    node.querySelector('[data-activity-name]').textContent = activity;
+    var again = node.querySelector('.cform-sent__again');
+    again.textContent = 'Envoyer une autre demande';
+    again.addEventListener('click', function () {
+      mountWorkshopForm(mount);
+      var field = mount.querySelector('select, input');
+      if (field) field.focus();
+    });
+    mount.appendChild(node);
+    panel.focus();
+  }
+
+  // « Demander cet atelier » on an offer card preselects it in the form and
+  // scrolls there. A plain #anchor would be read as a route by the router.
+  function wirePickButtons() {
+    var mount = document.querySelector('.workshop-form-mount');
+    if (!mount) return;
+    Array.prototype.forEach.call(
+      document.querySelectorAll('[data-pick-workshop]'),
+      function (btn) {
+        btn.addEventListener('click', function () {
+          var choice = btn.getAttribute('data-pick-workshop');
+          var select = mount.querySelector('select[name="workshop"]');
+          if (select) {
+            select.value = choice;
+            select.dispatchEvent(new Event('change'));
+          } else {
+            // The confirmation panel is showing — bring the form back.
+            mountWorkshopForm(mount, choice);
+          }
+          mount.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          var company = mount.querySelector('input[name="company"]');
+          if (company) company.focus({ preventScroll: true });
+        });
+      }
+    );
+  }
+
+  /* ------------------------------------------------------------------------
      Daily quote sign-up on the philo screen
      ------------------------------------------------------------------------
      Same shape as the contact forms — a template cloned into its mount, an
@@ -446,6 +618,13 @@
         document.querySelectorAll('.contact-form-mount'),
         mountForm
       );
+    }
+    if (workshopTpl && sentTpl) {
+      Array.prototype.forEach.call(
+        document.querySelectorAll('.workshop-form-mount'),
+        function (mount) { mountWorkshopForm(mount); }
+      );
+      wirePickButtons();
     }
     if (subscribeTpl && subscribedTpl) {
       Array.prototype.forEach.call(
