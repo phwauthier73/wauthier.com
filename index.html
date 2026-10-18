@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=7">
+<link rel="stylesheet" href="assets/css/site.css?v=8">
 </head>
 <body>
 
@@ -70,20 +70,8 @@
 
     <section class="wrap bento" aria-label="Nos activités">
       <div class="bento__grid">
-        <!-- Ordre d'importance : IA & RH, Énergie, SweetLo, philo, Architecture,
-             Kawa. L'ordre, la taille et la position des tuiles le reflètent. -->
-        <a class="tile tile--ia" href="#/ia" data-route-link="ia">
-          <div class="tile__logo">
-            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
-          </div>
-          <div>
-            <h3>Consultance IA &amp; RH</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5f9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </div>
-        </a>
-
+        <!-- Ordre d'affichage : Énergie, IA & RH, SweetLo, Architecture, philo,
+             Kawa. L'ordre, la taille et la position des tuiles suivent cet ordre. -->
         <a class="tile tile--energie" href="#/energie" data-route-link="energie">
           <div>
             <h3>Certificats &amp; audits énergétiques</h3>
@@ -93,6 +81,18 @@
           </div>
           <div class="tile__art">
             <img src="assets/img/peb-house.png" alt="" loading="lazy">
+          </div>
+        </a>
+
+        <a class="tile tile--ia" href="#/ia" data-route-link="ia">
+          <div class="tile__logo">
+            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
+          </div>
+          <div>
+            <h3>Consultance IA &amp; RH</h3>
+            <span class="tile__cue">Découvrir
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1f5f9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
           </div>
         </a>
 
@@ -107,16 +107,6 @@
           </div>
         </a>
 
-        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
-          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
-          <div class="tile__inner">
-            <h3>Le coin philo</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
-          </div>
-        </a>
-
         <!-- Architecture : écran pas encore publié — tuile non cliquable. -->
         <div class="tile tile--archi tile--soon">
           <img class="tile__img" src="assets/img/architecture.webp" alt="" loading="lazy">
@@ -126,6 +116,16 @@
             <span class="tile__cue">À venir</span>
           </div>
         </div>
+
+        <a class="tile tile--philo" href="#/philo" data-route-link="philo">
+          <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
+          <div class="tile__inner">
+            <h3>Le coin philo</h3>
+            <span class="tile__cue">Découvrir
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5a4a6b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </div>
+        </a>
 
         <a class="tile tile--kawa" href="#/kawa" data-route-link="kawa">
           <div>
@@ -794,6 +794,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=7"></script>
+<script src="assets/js/site.js?v=8"></script>
 </body>
 </html>

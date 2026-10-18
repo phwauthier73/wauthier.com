@@ -281,8 +281,8 @@ main { flex: 1; }
 .bento__grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  /* Les deux premières rangées (IA & RH, Énergie) sont plus hautes : la
-     surface des tuiles décroît avec l'ordre d'importance. */
+  /* Les deux premières rangées (Énergie, IA & RH) sont plus hautes : la
+     surface des tuiles décroît avec l'ordre d'affichage. */
   grid-template-rows: 190px 190px;
   grid-auto-rows: 158px;
   gap: 14px;
@@ -329,20 +329,20 @@ main { flex: 1; }
 .tile__cue--sm { gap: 7px; font-size: 12.5px; margin-top: 5px; }
 
 /* Individual tiles */
-.tile--archi { grid-column: span 4; grid-row: span 1; }
+.tile--archi { grid-column: span 7; grid-row: span 1; }
 /* Activité pas encore publiée : la tuile reste visible mais ne réagit pas. */
 .tile--soon { cursor: default; }
 .tile--soon:hover { transform: none; box-shadow: none; }
 .tile--archi h3 {
   font-family: var(--display);
-  font-size: 22px; font-weight: 600; letter-spacing: -.01em;
+  font-size: 27px; font-weight: 600; letter-spacing: -.01em;
 }
 .tile--archi .tile__scrim {
   background: linear-gradient(180deg, rgba(20, 25, 35, 0) 40%, rgba(20, 25, 35, .72) 100%);
 }
 
 .tile--ia {
-  grid-column: span 7; grid-row: span 2;
+  grid-column: span 5; grid-row: span 2;
   background: linear-gradient(150deg, #eef4fa 0%, #dbe7f4 100%);
   display: flex; flex-direction: column;
   padding: 30px 32px;
@@ -359,7 +359,7 @@ main { flex: 1; }
 }
 .tile--ia h3 {
   font-family: var(--display);
-  font-size: 30px; font-weight: 600; letter-spacing: -.01em;
+  font-size: 26px; font-weight: 600; letter-spacing: -.01em;
   color: var(--ia-deep);
 }
 .tile--ia .tile__cue { color: var(--ia); margin-top: 7px; }
@@ -407,7 +407,7 @@ main { flex: 1; }
 }
 
 .tile--energie {
-  grid-column: span 5; grid-row: span 2;
+  grid-column: span 7; grid-row: span 2;
   background: #eef3ea;
   display: flex; flex-direction: column-reverse; justify-content: space-between;
   gap: 20px;
@@ -423,7 +423,7 @@ main { flex: 1; }
 .tile--energie .tile__art img { width: auto; height: 100%; max-height: 210px; object-fit: contain; display: block; }
 
 .tile--philo {
-  grid-column: span 7; grid-row: span 1;
+  grid-column: span 4; grid-row: span 1;
   background: #edecf1;
   display: flex; flex-direction: column; justify-content: center;
   padding: 24px 28px;
@@ -1397,11 +1397,11 @@ a.fact:hover { border-color: var(--energie); }
 /* Tablet: relax the bento into a 6-column grid */
 @media (max-width: 1000px) {
   .bento__grid { grid-template-columns: repeat(6, 1fr); grid-template-rows: 170px 170px; grid-auto-rows: 150px; }
-  .tile--ia      { grid-column: span 6; grid-row: span 2; }
-  .tile--energie { grid-column: span 3; grid-row: span 2; }
+  .tile--energie { grid-column: span 6; grid-row: span 2; }
+  .tile--ia      { grid-column: span 3; grid-row: span 2; }
   .tile--sweet   { grid-column: span 3; grid-row: span 2; }
-  .tile--philo   { grid-column: span 6; grid-row: span 1; }
-  .tile--archi   { grid-column: span 3; grid-row: span 1; }
+  .tile--archi   { grid-column: span 6; grid-row: span 1; }
+  .tile--philo   { grid-column: span 3; grid-row: span 1; }
   .tile--kawa    { grid-column: span 3; grid-row: span 1; }
 }
 
@@ -1440,8 +1440,8 @@ a.fact:hover { border-color: var(--energie); }
   }
   .bento__grid .tile { grid-column: 1 / -1 !important; grid-row: auto !important; }
   .tile--sweet { min-height: 230px; }
-  .tile--energie { min-height: 260px; }
-  .tile--ia { min-height: 280px; }
+  .tile--energie { min-height: 280px; }
+  .tile--ia { min-height: 260px; }
   /* Kawa is now a logo tile, not a photo tile — it sizes like the other two. */
   .tile--archi, .tile--philo, .tile--kawa { min-height: 150px; }
 
