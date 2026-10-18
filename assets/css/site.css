@@ -646,6 +646,9 @@ a.fact:hover { color: inherit; }
 .cform__submit:hover { opacity: .88; }
 .cform__submit[disabled] { opacity: .6; cursor: default; }
 
+/* Astérisque des champs obligatoires. */
+.cform__req { color: #a3342f; font-weight: 700; }
+
 /* Marque un champ non obligatoire, sans rompre le libellé en capitales. */
 .cform__optional {
   font-weight: 400;

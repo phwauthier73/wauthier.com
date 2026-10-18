@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=9">
+<link rel="stylesheet" href="assets/css/site.css?v=10">
 </head>
 <body>
 
@@ -689,7 +689,7 @@
       </select>
     </label>
 
-    <label class="cform__field">Nom de l'entreprise
+    <label class="cform__field"><span>Nom de l'entreprise <span class="cform__req" aria-hidden="true">*</span></span>
       <input required type="text" name="company" autocomplete="organization" placeholder="Votre entreprise">
     </label>
     <div class="cform__row">
@@ -705,14 +705,14 @@
 
     <fieldset class="cform__group">
       <legend>Personne de contact</legend>
-      <label class="cform__field">Nom
+      <label class="cform__field"><span>Nom <span class="cform__req" aria-hidden="true">*</span></span>
         <input required type="text" name="name" autocomplete="name" placeholder="Prénom et nom">
       </label>
       <div class="cform__row">
-        <label class="cform__field">E-mail
+        <label class="cform__field"><span>E-mail <span class="cform__req" aria-hidden="true">*</span></span>
           <input required type="email" name="email" autocomplete="email" placeholder="vous@exemple.com">
         </label>
-        <label class="cform__field">Téléphone
+        <label class="cform__field"><span>Téléphone <span class="cform__req" aria-hidden="true">*</span></span>
           <input required type="tel" name="phone" autocomplete="tel" placeholder="+32 …">
         </label>
       </div>
@@ -747,6 +747,7 @@
       <textarea name="comments" rows="4" placeholder="Vos attentes, le contexte de votre équipe, une question sur l'atelier…"></textarea>
     </label>
 
+    <p class="cform__note"><span class="cform__req" aria-hidden="true">*</span> Champs obligatoires</p>
     <p class="cform__error" role="alert" hidden></p>
     <button class="cform__submit" type="submit">
       Envoyer la demande
@@ -799,6 +800,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=9"></script>
+<script src="assets/js/site.js?v=10"></script>
 </body>
 </html>
