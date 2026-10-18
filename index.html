@@ -24,7 +24,7 @@
      un déploiement : sans lui, il garde ses copies en cache et le site paraît
      inchangé. Incrémenter le numéro à chaque modification de site.css ou
      site.js — c'est la seule étape manuelle du projet. -->
-<link rel="stylesheet" href="assets/css/site.css?v=5">
+<link rel="stylesheet" href="assets/css/site.css?v=6">
 </head>
 <body>
 
@@ -44,10 +44,9 @@
     <ul class="nav__links">
       <li><a class="nav__link" href="#/ia"        data-route-link="ia">IA &amp; RH</a></li>
       <li><a class="nav__link" href="#/energie"   data-route-link="energie">Énergie</a></li>
-      <li><a class="nav__link" href="#/architecture" data-route-link="archi">Architecture</a></li>
       <li><a class="nav__link" href="#/philo"     data-route-link="philo">Philo</a></li>
       <li><a class="nav__link" href="#/kawa"      data-route-link="kawa">Kawa</a></li>
-      <li><a class="nav__link" href="#/sweetlo"   data-route-link="sweet">SweetLo</a></li>
+      <li><a class="nav__link" href="https://www.facebook.com/sweetlopatisserie?locale=fr_FR" target="_blank" rel="noopener noreferrer">SweetLo</a></li>
     </ul>
   </nav>
 
@@ -72,20 +71,22 @@
     <section class="wrap bento" aria-label="Nos activités">
       <div class="bento__grid">
 
-        <a class="tile tile--archi" href="#/architecture" data-route-link="archi">
-          <img class="tile__img" src="assets/img/architecture.webp" alt="" loading="lazy">
-          <div class="tile__scrim"></div>
-          <div class="tile__body">
-            <h3>Architecture</h3>
+
+        <a class="tile tile--energie" href="#/energie" data-route-link="energie">
+          <div>
+            <h3>Certificats &amp; audits énergétiques</h3>
             <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a6b47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
+          </div>
+          <div class="tile__art">
+            <img src="assets/img/peb-house.png" alt="" loading="lazy">
           </div>
         </a>
 
         <a class="tile tile--ia" href="#/ia" data-route-link="ia">
           <div class="tile__logo">
-            <img src="assets/img/ia-rh-logo.png" alt="IA &amp; RH — Atelier Déclic" loading="lazy">
+            <img src="assets/img/ia-rh-tile.png" alt="IA &amp; RH" width="493" height="262" loading="lazy">
           </div>
           <div>
             <h3>Consultance IA &amp; RH</h3>
@@ -95,7 +96,7 @@
           </div>
         </a>
 
-        <a class="tile tile--sweet" href="#/sweetlo" data-route-link="sweet">
+        <a class="tile tile--sweet" href="https://www.facebook.com/sweetlopatisserie?locale=fr_FR" target="_blank" rel="noopener noreferrer">
           <img class="tile__img" src="assets/img/cake-06.png" alt="" loading="lazy">
           <div class="tile__scrim"></div>
           <div class="tile__body tile__body--sm">
@@ -118,17 +119,16 @@
           </div>
         </a>
 
-        <a class="tile tile--energie" href="#/energie" data-route-link="energie">
-          <div>
-            <h3>Certificats &amp; audits énergétiques</h3>
-            <span class="tile__cue">Découvrir
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4a6b47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </span>
+
+        <!-- Architecture : écran pas encore publié — tuile non cliquable. -->
+        <div class="tile tile--archi tile--soon">
+          <img class="tile__img" src="assets/img/architecture.webp" alt="" loading="lazy">
+          <div class="tile__scrim"></div>
+          <div class="tile__body">
+            <h3>Architecture</h3>
+            <span class="tile__cue">À venir</span>
           </div>
-          <div class="tile__art">
-            <img src="assets/img/peb-house.png" alt="" loading="lazy">
-          </div>
-        </a>
+        </div>
 
         <a class="tile tile--philo" href="#/philo" data-route-link="philo">
           <img class="tile__filigrane" src="assets/img/epicure-filigrane.png" alt="" aria-hidden="true" loading="lazy">
@@ -795,6 +795,6 @@
   </div>
 </template>
 
-<script src="assets/js/site.js?v=5"></script>
+<script src="assets/js/site.js?v=6"></script>
 </body>
 </html>

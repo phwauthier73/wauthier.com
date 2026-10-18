@@ -49,6 +49,13 @@ bouton « précédent » du navigateur :
 | Espace Kawa  | `#/kawa`         |
 | SweetLo      | `#/sweetlo`      |
 
+**Liens externes et écrans en attente.** Dans la navigation et sur la tuile
+de l'accueil, SweetLo ouvre la page Facebook
+`facebook.com/sweetlopatisserie` dans un nouvel onglet ; l'écran `#/sweetlo`
+reste dans le HTML mais n'est plus lié. Architecture est retiré de la
+navigation et sa tuile, non cliquable, affiche « À venir » ; l'écran
+`#/architecture` reste joignable par son URL.
+
 Le contenu des sept écrans est présent dans le HTML initial (les écrans
 inactifs sont masqués), donc indexable par les moteurs de recherche. Une URL
 inconnue retombe sur l'accueil.
